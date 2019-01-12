@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://characters/good/GoodDuck.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/good_duck.png" type="Texture" id=2]
+[ext_resource path="res://assets/sound/Hit_Hurt.wav" type="AudioStream" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 44.5267
+
+[node name="GoodDuck" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+is_good = true
+
+[node name="Area2D" type="Area2D" parent="." index="0" groups=[
+"good",
+]]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="Sprite" type="Sprite" parent="Area2D" index="0"]
+
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="1"]
+
+shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="." index="1"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." index="2"]
+
+stream = ExtResource( 3 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+
+
